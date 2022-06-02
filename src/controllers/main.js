@@ -1,6 +1,8 @@
 const bcryptjs = require('bcryptjs');
 const db = require('../database/models');
 const sequelize = db.sequelize;
+const { Op } = require("sequelize");
+
 
 
 const mainController = {
@@ -22,14 +24,18 @@ const mainController = {
   
   
   bookSearch: (req, res) => {
-    db.Book.findAll(req.query.id)
-    .then(Book => {
     res.render('search');
-     });
+     
   },
-  bookSearchResult: (req, res) => {
-    // Implement search by title
-    res.render('search')
+  bookSearchResult:  function (req, res) {                      //busqueda de libro
+    db.Book.findAll({
+        where: {
+            title: { [Op.like]: '%' + req.query.search + '%' },
+        }
+    })
+        .then(function (Book) {
+          res.json(Book)
+        })
   },
   deleteBook: (req, res) => {
     // Implement delete book
@@ -78,6 +84,6 @@ const mainController = {
     // Implement edit book
     res.render('home');
   }
-};
+ }
 
 module.exports = mainController;
