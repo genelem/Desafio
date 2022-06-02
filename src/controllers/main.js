@@ -16,19 +16,20 @@ const mainController = {
   bookDetail: (req, res) => {
     db.Book.findByPk(req.params.id)
         .then(book => {
-            res.render('bookDetail.ejs', {books:Book});
+            res.render('bookDetail.ejs', {book});
         });
   },
+  
   
   bookSearch: (req, res) => {
     db.Book.findAll(req.query.id)
     .then(Book => {
-    res.render('search', { title: [ Book] });
+    res.render('search');
      });
   },
   bookSearchResult: (req, res) => {
     // Implement search by title
-    res.render('/books/search')
+    res.render('search')
   },
   deleteBook: (req, res) => {
     // Implement delete book
