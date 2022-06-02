@@ -17,43 +17,43 @@ const mainController = {
   },
   bookDetail: (req, res) => {
     db.Book.findByPk(req.params.id)
-        .then(book => {
-            res.render('bookDetail.ejs', {book});
-        });
+      .then(book => {
+        res.render('bookDetail.ejs', { book });
+      });
   },
-  
-  
   bookSearch: (req, res) => {
     res.render('search');
-     
-  },
-  bookSearchResult:  function (req, res) {                      //busqueda de libro
+
+   },
+  bookSearchResult: function (req, res) {                      //busqueda de libro
     db.Book.findAll({
-        where: {
-            title: { [Op.like]: '%' + req.query.search + '%' },
-        }
+      where: {
+        title: { [Op.like]: '%' + req.query.search + '%' },
+      }
     })
-        .then(function (Book) {
-          res.json(Book)
-        })
+      .then(function (Book) {
+        res.json(Book)
+      })
   },
   deleteBook: (req, res) => {
     // Implement delete book
     res.render('home');
   },
-  authors:  (req, res) => {
+  authors: (req, res) => {
     db.Author.findAll()
       .then((authors) => {
         res.render('authors', { authors });
       })
       .catch((error) => console.log(error));
   },
-  authorBooks:  (req, res) => {
+  authorBooks:
     // Implement books by author
-    res.render('authorBooks');
-    
-    
-  },
+    (req, res) => {
+      db.Book.findByPk(req.params.id)
+        .then(book => {
+          res.render('bookDetail.ejs', { book });
+        });
+    },
   register: (req, res) => {
     res.render('register');
   },
@@ -80,12 +80,12 @@ const mainController = {
   },
   edit: (req, res) => {
     // Implement edit book
-    res.render('editBook', {id: req.params.id})
+    res.render('editBook', { id: req.params.id })
   },
   processEdit: (req, res) => {
     // Implement edit book
     res.render('home');
   }
- }
+}
 
 module.exports = mainController;
