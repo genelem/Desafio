@@ -41,16 +41,18 @@ const mainController = {
     // Implement delete book
     res.render('home');
   },
-  authors: (req, res) => {
+  authors:  (req, res) => {
     db.Author.findAll()
       .then((authors) => {
         res.render('authors', { authors });
       })
       .catch((error) => console.log(error));
   },
-  authorBooks: (req, res) => {
+  authorBooks:  (req, res) => {
     // Implement books by author
     res.render('authorBooks');
+    
+    
   },
   register: (req, res) => {
     res.render('register');

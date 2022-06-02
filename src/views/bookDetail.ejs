@@ -31,16 +31,14 @@
             <p>COVER: <%= book.cover %>
             </p>
             <p>DESCRIPTION: <%= book.description + ' min' %>
-            </p>
-            <p class="lead mb-4 fw-bold">Authors: </p>
-            <p class="lead mb-4 fw-bold">Release Date: </p>
-            <p class="lead mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-              laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-              <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Edit</button>
-              <button type="button" class="btn btn-outline-secondary btn-lg px-4">Delete</button>
-            </div>
+            </p>AUTHOR:<%= book.authors%>
+              <p class="lead mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Edit</button>
+                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Delete</button>
+              </div>
           </div>
         </div>
       </div>
