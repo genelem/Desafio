@@ -33,11 +33,18 @@ const mainController = {
       }
     })
       .then(function (Book) {
-        res.render('BookDetail',{Book:Book})
+        res.render('home',{Book:Book})
       })
   },
-  deleteBook:  function (req, res) {   
-    res.render('home');
+  deleteBook:  (req, res) => {                            // eliminar libro
+    db.Book.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+        .then(() => {
+            res.redirect('books/:id')
+        })
   },
   authors: (req, res) => {
     db.Author.findAll()
@@ -78,18 +85,22 @@ const mainController = {
     // Implement login process
     res.render('home');
   },
-  edit: 
+  editBook: 
     (req, res) => {                              // edicion de libro
       db.Book.findByPk(req.params.id)
           .then(book => {
-              res.render('editBook.ejs', { id:req.params.id })
+              res.render("editBook", { id:req.params.id })
           })
     
   },
   processEdit: (req, res) => {
-    // Implement edit book
+    db.Book.findByPk(req.params.id)
+          .then(book => {
     res.render('home');
+   })
+  
   }
-}
+   }
+
 
 module.exports = mainController;
