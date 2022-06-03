@@ -58,8 +58,9 @@ const mainController = {
     (req, res) => {
       db.Book.findByPk(req.params.id)
         .then(book => {
-          res.render('bookDetail.ejs', { book });
+          res.render('authorBooks', { book });
         });
+    
     },
   register: (req, res) => {
     res.render('register');
