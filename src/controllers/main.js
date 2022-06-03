@@ -26,17 +26,17 @@ const mainController = {
 
    },
   bookSearchResult: function (req, res) {                      //busqueda de libro
+    let bookFind = req.query.book
     db.Book.findAll({
       where: {
-        title: { [Op.like]: '%' + req.query.search + '%' },
+        title: { [Op.like]: '%' + bookFind + '%' },
       }
     })
       .then(function (Book) {
-        res.json(Book)
+        res.render('BookDetail',{Book:Book})
       })
   },
-  deleteBook: (req, res) => {
-    // Implement delete book
+  deleteBook:  function (req, res) {   
     res.render('home');
   },
   authors: (req, res) => {
@@ -78,9 +78,13 @@ const mainController = {
     // Implement login process
     res.render('home');
   },
-  edit: (req, res) => {
-    // Implement edit book
-    res.render('editBook', { id: req.params.id })
+  edit: 
+    (req, res) => {                              // edicion de libro
+      db.Book.findByPk(req.params.id)
+          .then(book => {
+              res.render('editBook.ejs', { id:req.params.id })
+          })
+    
   },
   processEdit: (req, res) => {
     // Implement edit book
