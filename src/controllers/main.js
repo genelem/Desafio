@@ -2,6 +2,9 @@ const bcryptjs = require('bcryptjs');
 const db = require('../database/models');
 const sequelize = db.sequelize;
 const { Op } = require("sequelize");
+const { validationResult } = require("express-validator");
+
+
 
 
 
@@ -81,13 +84,33 @@ const mainController = {
   login: (req, res) => {
     // Implement login process
     res.render('login');
+  
   },
-  processLogin: (req, res) => {
-    // Implement login process
-    res.render('home');
-  },
-  editBook: 
-    (req, res) => {                              // edicion de libro
+  processLogin:  (req, res, next) => {
+    const errores = validationResult(req);
+
+    if(!errores.isEmpty()){
+        return res.render("login", { 
+            errores: errores.errors,
+            old: req.body 
+        });
+    }
+    db.User.findOne({
+        where: {
+            email: req.body.email,
+            pass:req.body.pass = bcryptjs.hashSync(req.body.password, 8)
+        }
+    }).then( usuarioEncontrado => {
+        req.session.usuarioLogueado = usuarioEncontrado;
+        if(req.body.recordame){
+            res.cookie("recordame", usuarioEncontrado, { maxAge: 60000 * 60 * 24 })
+        }
+        return res.redirect("/");
+    })  
+
+},
+
+editBook: function(req, res){                        
       db.Book.findByPk(req.params.id)
           .then(book => {
               res.render("editBook", { id:req.params.id })
@@ -101,7 +124,9 @@ const mainController = {
    })
   
   }
-   }
 
+   }
+    
+ 
 
 module.exports = mainController;
