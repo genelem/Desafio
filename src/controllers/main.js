@@ -57,13 +57,11 @@ const mainController = {
       })
       .catch((error) => console.log(error));
   },
-  authorBooks:
-    // Implement books by author
-    (req, res) => {
-      db.Book.findByPk(req.params.id)
-        .then(book => {
-          res.render('authorBooks', { book });
-        });
+  authorBooks:(req, res) => {
+    db.Book.findByPk(req.params.id)
+      .then(book => {
+        res.render('bookDetail', { book });
+      });
     
     },
   register: (req, res) => {

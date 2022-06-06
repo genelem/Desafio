@@ -3,6 +3,7 @@ const path = require('path');
 const session = require("express-session");
 const cookieParser = require('cookie-parser')
 const bodyParser =  require('body-Parser');
+const methodOverride = require('method-override');
 
 
 const mainRouter = require('./routes/main');
@@ -34,6 +35,7 @@ app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', 'src/views');
 
+app.use(methodOverride('_method'));
 app.use('/', mainRouter);
 app.use(booksRouter);
 app.use(authorsRouter);
