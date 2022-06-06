@@ -3,6 +3,7 @@ const db = require('../database/models');
 const sequelize = db.sequelize;
 const { Op } = require("sequelize");
 const { validationResult } = require("express-validator");
+const { promiseImpl } = require('ejs');
 
 
 
@@ -29,14 +30,14 @@ const mainController = {
 
    },
   bookSearchResult: function (req, res) {                      //busqueda de libro
-    let bookFind = req.query.book
+    let bookFind = req.body.book
     db.Book.findAll({
       where: {
         title: { [Op.like]: '%' + bookFind + '%' },
       }
     })
       .then(function (Book) {
-        res.render('home',{Book:Book})
+        res.send('books',{Book:Book})
       })
   },
   deleteBook:  (req, res) => {                            // eliminar libro
