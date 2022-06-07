@@ -26,14 +26,16 @@ const mainController = {
 
   },
   bookSearchResult: function (req, res) {                      //busqueda de libro
-    let bookFind = req.body.book
+    let bookFind = req.query.book
+                   
     db.Book.findAll({
       where: {
         title: { [Op.like]: '%' + bookFind + '%' },
+        
       }
     })
       .then(function (Book) {
-        res.send('books', { Book: Book })
+        res.send('search')
       })
   },
   deleteBook: (req, res) => {                            // eliminar libro
@@ -56,7 +58,7 @@ const mainController = {
   authorBooks: (req, res) => {
     db.Book.findByPk(req.params.id)
       .then(book => {
-        res.render('bookDetail', { book });
+        res.render('authorBooks', { book });
       });
 
   },
@@ -127,4 +129,3 @@ module.exports = mainController;
 
 
 
-module.exports = mainController;
