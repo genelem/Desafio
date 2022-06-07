@@ -4,6 +4,7 @@ const sequelize = db.sequelize;
 const { Op } = require("sequelize");
 const { validationResult } = require("express-validator");
 const { promiseImpl } = require('ejs');
+const path = require('path');
 
 const mainController = {
   home: (req, res) => {
@@ -27,27 +28,26 @@ const mainController = {
   },
   bookSearchResult: function (req, res) {                      //busqueda de libro
     let bookFind = req.query.book
-                   
+
     db.Book.findAll({
       where: {
         title: { [Op.like]: '%' + bookFind + '%' },
-        
+
       }
     })
       .then(function (Book) {
         res.send('search')
       })
   },
-  deleteBook: (req, res) => {                            // eliminar libro
-    db.Book.destroy({
-      where: {
-        id: req.params.id
-      }
-    })
+  deleteBook: (req, res) => {
+    let bookId = req.params.id
+    db.Book.destroy({ where: { id: bookId }, force: true })
       .then(() => {
-        res.redirect('books/:id')
+        return res.redirect('/')
       })
+      .catch(error => res.send(error))
   },
+
   authors: (req, res) => {
     db.Author.findAll()
       .then((authors) => {
@@ -55,7 +55,9 @@ const mainController = {
       })
       .catch((error) => console.log(error));
   },
-  authorBooks: (req, res) => {
+
+  authorBooks: async (req, res) => {
+
     db.Book.findByPk(req.params.id)
       .then(book => {
         res.render('authorBooks', { book });
@@ -106,26 +108,49 @@ const mainController = {
     })
 
   },
-  editBook: function (req, res) {
-    db.Book.findByPk(req.params.id)
-      .then(book => {
-        res.render("editBook", { id: req.params.id })
+  editBook: (req, res) => {
+    let promBook = db.Book.findByPk(req.params.id)
+    Promise
+      .all([promBook])
+      .then(([book]) => {
+
+        return res.render(path.resolve(__dirname, '..', 'views', 'editBook'), { book })
       })
+      .catch(error => res.send(error))
+
+
 
   },
+
   processEdit: (req, res) => {
-    db.Book.findByPk(req.params.id)
-      .then(book => {
-        res.render('home');
+
+
+    let bookId = req.params.id
+    db.Book.update({
+      title: req.body.title,
+      cover: req.body.cover,
+      description: req.body.description,
+
+
+    },
+      {
+        where: { id: bookId }
       })
 
-  }
+      .then(() => {
+        return res.redirect('/')
+      })
+      .catch(error => res.send(error))
+
+
+  },
+
+
+
 
 }
 
 
 
 module.exports = mainController;
-
-
 

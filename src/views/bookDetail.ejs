@@ -23,7 +23,6 @@
           </h1>
           <div class="col-lg-6 mx-auto">
             <h1>
-              <%= book.id.title %>
             </h1>
             <br>
             <p>TITLE: <%= book.title %>
@@ -34,10 +33,12 @@
                   temporincididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
                   ullamco
                   laboris nisi ut aliquip ex ea commodo consequat.</p>
-                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-          <a href="/books/edit"><button type="button" class="btn btn-primary btn-lg px-4 gap-3">Edit</button></a>
-          <a href="/books/:id"><button type="button" class="btn btn-outline-secondary btn-lg px-4">Delete</button></a>
-                </div>
+                  <form action="/books/delete/<%= book.id %>?_method=DELETE" method="POST">
+                    <input class="btn btn-outline-secondary btn-lg px-4" onclick="location.href='/books/edit/<%= book.id %>'"  
+                        type="button" value="Editar">
+                    <button type="submit" class="btn btn-outline-secondary btn-lg px-4">Eliminar</button>
+                </form>
+        
           </div>
         </div>
       </div>
