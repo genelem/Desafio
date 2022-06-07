@@ -14,8 +14,8 @@ router.post('/users/register', mainController.processRegister);
 router.get('/users/login', mainController.login);
 router.post('/users/login' ,mainController.processLogin);
 router.delete('/books/:id', mainController.deleteBook);
-router.get('/books/edit', mainController.editBook);
-router.put('/books/edit/:id', mainController.processEdit);
+router.get('/books/edit/books/:id', mainController.editBook);
+router.patch('/books/edit/books/:id', mainController.processEdit);
 
 module.exports = router;
 

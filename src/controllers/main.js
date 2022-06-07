@@ -36,16 +36,18 @@ const mainController = {
         res.send('books', { Book: Book })
       })
   },
-  deleteBook: (req, res) => {                            // eliminar libro
-    db.Book.destroy({
-      where: {
-        id: req.params.id
-      }
-    })
-      .then(() => {
-        res.redirect('books/:id')
-      })
-  },
+  deleteBook: function (req,res) {
+    let BookId = req.params.id;
+    books
+    .findByPk(BookId)
+    .then(Book => {
+        res.render('deleteBook', {Book})
+    .catch(error => res.send(error))
+  
+})
+
+ },
+
   authors: (req, res) => {
     db.Author.findAll()
       .then((authors) => {
@@ -104,26 +106,57 @@ const mainController = {
     })
 
   },
-  editBook: function (req, res) {
-    db.Book.findByPk(req.params.id)
-      .then(book => {
-        res.render("editBook", { id: req.params.id })
-      })
+  editBook: (req, res) => {
+    let promBook= db.Book.findByPk(req.params.id)
+        Promise
+        .all([promBook])
+        .then(([book]) => {
+  
+          return res.render(path.resolve(__dirname, '..', 'views', 'editBook'), {book})
+        })
+        .catch(error => res.send(error))
 
+
+  
   },
-  processEdit: (req, res) => {
-    db.Book.findByPk(req.params.id)
-      .then(book => {
-        res.render('home');
-      })
+  processEdit:(req, res) => {
+    const errors = validationResult(req)
+        if (errors.errors.length > 0) {
+            let bookId = req.params.id
+            let promBook = db.product.findByPk(bookId);
 
-  }
+            Promise
+            .all([promBook])
+            .then(([book]) => {
+
+                return res.render(path.resolve(__dirname, '..', 'views', 'updateBook'), { errorsbooks: errors.mapped(),book})
+                })
+        }else{
+
+            let bookId = req.params.id
+            db.Book.update({
+                title: req.body.title,
+                cover: req.body.cover,
+                description: req.body.description,
+                
+    
+            },
+                {
+                    where: { id: bookId }
+                })
+    
+                .then(() => {
+                    return res.redirect('/')
+                })
+                .catch(error => res.send(error))
+        }
+
+    },
+
+
+  
 
 }
-
-
-
-module.exports = mainController;
 
 
 
