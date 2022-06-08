@@ -1,0 +1,57 @@
+[
+    {
+        "id": 1,
+        "name": "Cynthia Bowman",
+        "email": "Cynthia@gmail.com",
+        "Pass":"$2a$10$6a6hr260zNMZ1DtF0/Ouj.L0sKn12S48OdTSrrJJrdY...",
+        "Country": "USA",
+        "CategoryId": "2"
+    },
+    {
+        "id": 2,
+        "name": "Hanley Rios",
+        "email": "Hanley@gmail.com",
+        "Pass":"$2a$10$6a6hr260zNMZ1DtF0/Ouj.L0sKn12S48OdTSrrJJrdY...",
+        "Country": "USA",
+        "CategoryId": "1"
+    },
+    {
+        "id": 3,
+        "name": "Rowena Twitty",
+        "email": "Rowena@gmail.com",
+        "Pass":"$2a$10$6a6hr260zNMZ1DtF0/Ouj.L0sKn12S48OdTSrrJJrdY...",
+        "Country": "USA",
+        "CategoryId": "1"
+    },
+    {
+        "id": 4,
+        "name": "Fabian Webster",
+        "email": "Fabian@gmail.com",
+        "Pass":"$2a$10$6a6hr260zNMZ1DtF0/Ouj.L0sKn12S48OdTSrrJJrdY...",
+        "Country": "india",
+        "CategoryId": "1"
+    },
+    {
+        "id": 5,
+        "name": "Haper Mann",
+        "email": "Harper@gmail.com",
+        "Pass":"$2a$10$6a6hr260zNMZ1DtF0/Ouj.L0sKn12S48OdTSrrJJrdY...",
+        "Country": "USA",
+        "CategoryId": "2"
+
+    },
+    {
+        "id": 6,
+        "name": "Cristian Wenz",
+        "email": "Christian@gmail.com",
+        "Pass":"$2a$10$6a6hr260zNMZ1DtF0/Ouj.L0sKn12S48OdTSrrJJrdY...",
+        "Country": "USA",
+        "CategoryId": "2"
+
+    }
+   
+
+
+
+
+]

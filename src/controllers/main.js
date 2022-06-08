@@ -6,6 +6,7 @@ const { validationResult } = require("express-validator");
 const { promiseImpl } = require('ejs');
 const path = require('path');
 
+
 const mainController = {
   home: (req, res) => {
     db.Book.findAll({
@@ -26,19 +27,31 @@ const mainController = {
     res.render('search');
 
   },
-  bookSearchResult: function (req, res) {                      //busqueda de libro
-    let bookFind = req.query.book
 
-    db.Book.findAll({
-      where: {
-        title: { [Op.like]: '%' + bookFind + '%' },
-
-      }
-    })
-      .then(function (Book) {
-        res.send('search')
+  bookSearchResult: function (req, res) {
+    if (req.query.search == req.params.title) {
+      db.Book.findAll({
+        raw: true, include: [{ attributes: ['title'] }],
+        where: {
+          book_title: { [Op.like]: '%' + req.query.search + '%' }
+        }
       })
+        .then((resultado) => {
+          let bookFind = req.params.id
+
+          Promise
+            .all([bookFind])
+            .then(([book]) => {
+
+              return res.render(path.resolve(__dirname, '..', 'views', 'search'), { book_title })
+            })
+            .catch(error => res.send(error))
+
+        })
+
+    }
   },
+
   deleteBook: (req, res) => {
     let bookId = req.params.id
     db.Book.destroy({ where: { id: bookId }, force: true })
@@ -118,20 +131,14 @@ const mainController = {
       })
       .catch(error => res.send(error))
 
-
-
   },
 
   processEdit: (req, res) => {
-
-
     let bookId = req.params.id
     db.Book.update({
       title: req.body.title,
       cover: req.body.cover,
       description: req.body.description,
-
-
     },
       {
         where: { id: bookId }
@@ -146,11 +153,14 @@ const mainController = {
   },
 
 
-
+logout:function(req, res){
+    req.session.destroy();       
+    res.clearCookie("login");
+    res.redirect("/");
+}
 
 }
 
 
 
 module.exports = mainController;
-
