@@ -13,7 +13,8 @@ const {
     body
 } = require('express-validator');
 const mainController =  require(path.resolve(__dirname, '../controllers/main'));
-
+const sinLogin = require("../middlewares/sinLogin");
+const accesos = require("../middlewares/acceso");
 
 
 
@@ -48,11 +49,14 @@ router.post('/users/logout', mainController.logout);
 
 // Edicion de libros
 router.get('/books/edit/:id', mainController.editBook);
-router.patch('/books/edit/:id', mainController.processEdit);
+router.patch('/books/edit/:id',accesos, sinLogin, mainController.processEdit);
 
 // Eliminacion de libros
 
-router.delete('/books/delete/:id', mainController.deleteBook);
+router.delete('/books/delete/:id',accesos, mainController.deleteBook);
+
+//Lista de usuarios
+router.get('/', sinLogin, mainController.users);
 
 module.exports = router;
 
