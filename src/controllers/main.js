@@ -35,14 +35,38 @@ const mainController = {
   },
 
 
-  deleteBook: (req, res) => {
-    let bookId = req.params.id
-    db.Book.destroy({ where: { id: bookId }, force: true })
-      .then(() => {
-        return res.redirect('/')
+  destroy: (req, res) => {
+    let promBook = db.Book.findByPk(req.params.id)
+    Promise
+      .all([promBook])
+      .then(([book]) => {
+
+        return res.render(path.resolve(__dirname, '..', 'views', 'destroyBook'), { book })
       })
       .catch(error => res.send(error))
+},
+
+delete:  (req, res) => {
+  let bookId = req.params.id
+  db.Book.destroy({
+    title: req.body.title,
+    cover: req.body.cover,
+    description: req.body.description,
   },
+    {
+      where: { id: bookId }
+    })
+
+    .then(() => {
+      return res.redirect('/')
+    })
+    .catch(error => res.send(error))
+
+ },
+
+
+ 
+  
 
   authors: (req, res) => {
     db.Author.findAll()

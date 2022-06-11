@@ -52,7 +52,9 @@ router.patch('/books/edit/:id',accesos, sinLogin, mainController.processEdit);
 
 // Eliminacion de libros
 
-router.delete('/books/delete/:id',accesos, mainController.deleteBook);
+//Borrar libros
+router.delete('/books/delete/:id', mainController.destroy); 
+router.patch('/books/delete/:id',mainController.delete);
 
 //Lista de usuarios
 router.get('/', sinLogin, mainController.users);

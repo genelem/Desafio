@@ -33,11 +33,12 @@
                   temporincididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
                   ullamco
                   laboris nisi ut aliquip ex ea commodo consequat.</p>
-                  <form action="/books/delete/<%= book.id %>?_method=DELETE" method="POST">
-                    <input class="btn btn-outline-secondary btn-lg px-4" onclick="location.href='/books/edit/<%= book.id %>'"  
-                        type="button" value="Editar">
-                    <button type="submit" class="btn btn-outline-secondary btn-lg px-4">Eliminar</button>
-                </form>
+                  <div>
+                    <form action="/books/delete/<%= book.id %>?_method=DELETE" method="POST">
+                      <input class="btn btn-outline-secondary btn-lg px-4" onclick="location.href='/books/edit/<%= book.id %>'"  
+                          type="button" value="Editar">
+                      <button type="submit" class="btn btn-outline-secondary btn-lg px-4">Eliminar</button>
+                  </form>
         
           </div>
         </div>

@@ -32,7 +32,17 @@ module.exports = (sequelize, dataTypes) => {
       otherKey: 'AuthorId',
       timestamps: false
     });
-  };
-
+  
+    }
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
   return Book;
 };
