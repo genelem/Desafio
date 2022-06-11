@@ -23,34 +23,17 @@ const mainController = {
         res.render('bookDetail.ejs', { book });
       });
   },
-  bookSearch: (req, res) => {
-    res.render('search');
-
-  },
-
-  bookSearchResult: function (req, res) {
-    if (req.query.search == req.params.title) {
-      db.Book.findAll({
-        raw: true, include: [{ attributes: ['title'] }],
-        where: {
-          book_title: { [Op.like]: '%' + req.query.search + '%' }
-        }
+  search: (req, res)=> {
+    
+    db.Book.findAll({
+      include: [{ association: 'authors' }]
+    })
+      .then((books) => {
+        res.render('search.ejs', { books });
       })
-        .then((resultado) => {
-          let bookFind = req.params.id
-
-          Promise
-            .all([bookFind])
-            .then(([book]) => {
-
-              return res.render(path.resolve(__dirname, '..', 'views', 'search'), { book_title })
-            })
-            .catch(error => res.send(error))
-
-        })
-
-    }
+      .catch((error) => console.log(error));
   },
+
 
   deleteBook: (req, res) => {
     let bookId = req.params.id

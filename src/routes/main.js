@@ -25,8 +25,7 @@ router.get('/books/detail/:id', mainController.bookDetail);
 
 // Busqueda de libros
 
-router.get('/books/search', mainController.bookSearch);
-router.post('/books/search', mainController.bookSearchResult);
+router.get('/search/books', mainController.search);
 
 // Lista de autores
 router.get('/authors', mainController.authors);
