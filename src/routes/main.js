@@ -42,7 +42,7 @@ router.post('/users/register', mainController.processRegister);
 router.get('/users/login', mainController.login);
 router.post('/users/login', [check('email').isEmail().withMessage('Email invalido'),check('password').isLength({ min: 6 }).withMessage('La contraseña debe tener al menos 6 caracteres'),
 ],mainController.processLogin);
-router.post('/users/logout', mainController.logout);
+router.get('/logout', mainController.logout);
 
 
 
