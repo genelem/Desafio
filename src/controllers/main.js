@@ -5,6 +5,7 @@ const { Op } = require("sequelize");
 const { validationResult } = require("express-validator");
 const { promiseImpl } = require('ejs');
 const path = require('path');
+const fs = require('fs');
 
 
 const mainController = {
@@ -64,11 +65,7 @@ delete:  (req, res) => {
 
  },
 
-
- 
-  
-
-  authors: (req, res) => {
+   authors: (req, res) => {
     db.Author.findAll()
       .then((authors) => {
         res.render('authors', { authors });
@@ -105,24 +102,27 @@ delete:  (req, res) => {
     res.render('login');
 
   },
-  processLogin:(req,res) =>{
-    const errors = validationResult(req);
-    
-    if(errors.isEmpty()){
-      let archivoUsuarios =  JSON.parse(fs.readFileSync(path.resolve(__dirname, '../database/usuarios.json')));
-      let usuarioLogueado = archivoUsuarios.find(usuario => usuario.email == req.body.email)
-     
-      delete usuarioLogueado.password;
-      req.session.usuario = usuarioLogueado;  
-      if(req.body.recordarme){
-        res.cookie('email',usuarioLogueado.email,{maxAge: 1000 * 60 * 60 * 24})
-      }
-      return res.redirect('/');   
+  processLogin:(req, res, next) => {
+    const errores = validationResult(req);
 
-    }else{
-     
-      res.render(path.resolve(__dirname, '../views/login'),{errors:errors.mapped(),old:req.body});        
+    if(!errores.isEmpty()){
+        return res.render("login", { 
+            errores: errores.errors,
+            old: req.body 
+        });
     }
+    db.User.findOne({
+        where: {
+            email: req.body.email,
+            pass:req.body.pass = bcryptjs.hashSync(req.body.password, 8)
+        }
+    }).then( usuarioEncontrado => {
+        req.session.usuarioLogueado = usuarioEncontrado;
+        if(req.body.recordame){
+            res.cookie("recordame", usuarioEncontrado, { maxAge: 60000 * 60 * 24 })
+        }
+        return res.redirect("/");
+    })  
 
   },
   editBook: (req, res) => {

@@ -5,18 +5,11 @@ const methodOverride = require('method-override');
 const session = require("express-session");
 const cookieParser = require('cookie-parser')
 const bodyParser =  require('body-Parser');
-const recordame = require("./middlewares/recordar");
+const recordame = require("./middlewares/recordame");
 const locals = require("./middlewares/locals");
-
-//Requerir el middleware que controla si el usuario está o no Logueado
-const acceso = require('./middlewares/acceso');
-
-//Debemos requerir nuestro Middleware de mantenimiento
-//const mantenimiento = require('./middlewares/mantenimiento');
 
 
 const mainRouter = require('./routes/main');
-
 const booksRouter = require('./routes/main');
 const authorsRouter = require('./routes/main');
 const usersRouter = require('./routes/main');
@@ -33,7 +26,7 @@ app.use(express.urlencoded({ extended: false }));           //para capturar envi
 app.use(session( {secret: "la clave secreta"}));
 app.use(methodOverride('_method'));
 app.use(cookieParser());
-app.use(acceso);
+
 
 //Llamo mi Middleware de aplicación - 
 //app.use(mantenimiento);  //Le comente para ahora hacer un middleware de ruta
